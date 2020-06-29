@@ -51,5 +51,10 @@ describe('server', () => {
         .expect(200);
       assert.equal(response.text, 'Howdy Neo!');
     });
+
+    it('should return 400 when name contains a number', async () => {
+      const response = await baseUrl.get(`${route}?name=withNumb3r`)
+        .expect(400);
+    });
   });
 });
