@@ -10,11 +10,11 @@ module.exports = function Server() {
   let httpServer;
 
   app.get('/hello', (req, res) => {
-      const name = req.query.name || 'world';
-      try {
-        const greeting = createGreeting('Hello', name);
-        return res.send(greeting);
-      } catch (err) {
+    const name = req.query.name || 'World';
+    try {
+      const greeting = createGreeting('Hello', name);
+      return res.send(greeting);
+    } catch (err) {
       return res.status(400).end();
     }
   });

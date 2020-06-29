@@ -17,32 +17,39 @@ describe('server', () => {
 
   after(() => server.stop());
 
-  it('should return hello greeting', async () => {
-    const response = await baseUrl.get('/hello')
-      .expect(200);
-    assert.equal(response.text, 'Hello world!');
-  });
+  describe('hello', () => {
+    const route = '/hello';
 
-  it('should return hello greeting with name parameter', async () => {
-    const response = await baseUrl.get('/hello?name=Neo')
-      .expect(200);
-    assert.equal(response.text, 'Hello Neo!');
+    it('should return greeting', async () => {
+      const response = await baseUrl.get(route)
+        .expect(200);
+      assert.equal(response.text, 'Hello World!');
+    });
+    
+    it('should return hello greeting with name parameter', async () => {
+      const response = await baseUrl.get(`${route}?name=Neo`)
+        .expect(200);
+      assert.equal(response.text, 'Hello Neo!');
+    });
+    
+    it('should return 400 when name contains a number', async () => {
+      const response = await baseUrl.get(`${route}?name=withNumb3r`)
+        .expect(400);
+    });
   });
-
-  it('should return howdy greeting', async () => {
-    const response = await baseUrl.get('/howdy')
-      .expect(200);
-    assert.equal(response.text, 'Howdy world!');
+  
+  describe('howdy', () => {
+    const route = '/howdy';
+    it('should return greeting', async () => {
+      const response = await baseUrl.get(route)
+        .expect(200);
+      assert.equal(response.text, 'Howdy World!');
+    });
+    
+    it('should return greeting with name parameter', async () => {
+      const response = await baseUrl.get(`${route}?name=Neo`)
+        .expect(200);
+      assert.equal(response.text, 'Howdy Neo!');
+    });
   });
-
-  it('should return howdy greeting with name parameter', async () => {
-    const response = await baseUrl.get('/howdy?name=Neo')
-      .expect(200);
-    assert.equal(response.text, 'Howdy Neo!');
-  });
-
-  it('should return 400 when name contains a number', async () => {
-    const response = await baseUrl.get('/hello?name=withNumb3r')
-      .expect(400);
-  });
-})
+});
