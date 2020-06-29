@@ -2,8 +2,8 @@
 /* This file does not need to be changed in order to complete the exercises*/
 module.exports = class GreetingFactory {
 
-  constructor() {
-    this.logger = console;
+  constructor(logger = console) {
+    this.logger = logger;
   }
 
   createGreeting = (greeting, name, logger = this.logger) => {
