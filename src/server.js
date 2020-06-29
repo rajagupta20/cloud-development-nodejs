@@ -20,7 +20,7 @@ module.exports = function Server() {
   });
 
   app.get('/howdy', (req, res) => {
-    const name = req.query.name || 'world';
+    const name = req.query.name || 'World';
     console.error('Deprecated endpoint used!');
     const greeting = createGreeting('Howdy', name);
     res.send(greeting);
