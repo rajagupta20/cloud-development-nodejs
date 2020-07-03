@@ -13,7 +13,7 @@ module.exports = class Server {
     this.app = express();
 
     this.app.get('/hello', (req, res) => {
-      const greetingService = new GreetingService(logger);
+      const greetingService = new GreetingService(console);
       const name = req.query.name || 'World';
       try {
         const greeting = greetingService.createGreeting('Hello', name);
@@ -24,7 +24,7 @@ module.exports = class Server {
     });
 
     this.app.get('/howdy', (req, res) => {
-      const greetingService = new GreetingService(logger);
+      const greetingService = new GreetingService(console);
       const name = req.query.name || 'World';
       console.error('Deprecated endpoint used!');
       try {

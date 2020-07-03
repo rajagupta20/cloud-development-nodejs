@@ -33,7 +33,7 @@ describe('server', () => {
     });
     
     it('should return 400 when name contains a number', async () => {
-      const response = await baseUrl.get(`${route}?name=withNumb3r`)
+      await baseUrl.get(`${route}?name=withNumb3r`)
         .expect(400);
     });
   });
@@ -53,7 +53,7 @@ describe('server', () => {
     });
 
     it('should return 400 when name contains a number', async () => {
-      const response = await baseUrl.get(`${route}?name=withNumb3r`)
+      await baseUrl.get(`${route}?name=withNumb3r`)
         .expect(400);
     });
   });
