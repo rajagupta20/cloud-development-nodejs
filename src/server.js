@@ -1,48 +1,53 @@
 'use strict';
 
 const express = require('express');
-const GreetingFactory = require('./greeting-factory');
+const GreetingService = require('./greeting-service');
 
-module.exports = function Server() {
+module.exports = class Server {
+  app;
+  httpServer;
+  logger;
 
-  const { createGreeting } = new GreetingFactory();
-  const app = express();
-  let httpServer;
+  constructor(logger) {
+    this.logger = logger;
+    this.app = express();
 
-  app.get('/hello', (req, res) => {
-    const name = req.query.name || 'World';
-    try {
-      const greeting = createGreeting('Hello', name);
-      return res.send(greeting);
-    } catch (err) {
-      return res.status(400).end();
-    }
-  });
+    this.app.get('/hello', (req, res) => {
+      const greetingService = new GreetingService(logger);
+      const name = req.query.name || 'World';
+      try {
+        const greeting = greetingService.createGreeting('Hello', name);
+        return res.send(greeting);
+      } catch (err) {
+        return res.status(400).end();
+      }
+    });
 
-  app.get('/howdy', (req, res) => {
-    const name = req.query.name || 'World';
-    console.error('Deprecated endpoint used!');
-    try {
-      const greeting = createGreeting('Howdy', name);
-      return res.send(greeting);
-    } catch (err) {
-      return res.status(400).end();
-    }
-  });
+    this.app.get('/howdy', (req, res) => {
+      const greetingService = new GreetingService(logger);
+      const name = req.query.name || 'World';
+      console.error('Deprecated endpoint used!');
+      try {
+        const greeting = greetingService.createGreeting('Howdy', name);
+        return res.send(greeting);
+      } catch (err) {
+        return res.status(400).end();
+      }
+    });
+  }
 
-  this.start = (port) => {
+  start(port) {
     return new Promise((resolve, reject) => {
-      httpServer = app.listen(port, () => {
-        console.log(`Server started on port ${port}`);
-        resolve(httpServer.address().port);
+      this.httpServer = this.app.listen(port, () => {
+        resolve(this.httpServer.address().port);
       })
-      httpServer.on('error', reject);
+      this.httpServer.on('error', reject);
     });
   };
   
-  this.stop = () => {
+  stop() {
     return new Promise((resolve) => {
-      httpServer.close(resolve);
+      this.httpServer.close(resolve);
     });
   }
 };

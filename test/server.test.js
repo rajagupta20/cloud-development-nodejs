@@ -9,7 +9,7 @@ describe('server', () => {
   let baseUrl;
 
   before(async () => {
-    server = new ExpressServer();
+    server = new ExpressServer(console);
     const port = await server.start(0);
 
     baseUrl = request(`http://localhost:${port}`);
