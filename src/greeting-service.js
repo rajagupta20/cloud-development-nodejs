@@ -1,5 +1,4 @@
 'use strict';
-/* This file does not need to be changed in order to complete the exercises*/
 module.exports = class GreetingService {
 
   constructor(logger) {
