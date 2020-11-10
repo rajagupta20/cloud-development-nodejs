@@ -23,13 +23,13 @@ describe('server', () => {
     it('should return greeting', async () => {
       const response = await baseUrl.get(route)
         .expect(200);
-      assert.equal(response.text, 'Hello World!');
+      assert.strictEqual(response.text, 'Hello World!');
     });
     
     it('should return hello greeting with name parameter', async () => {
       const response = await baseUrl.get(`${route}?name=Neo`)
         .expect(200);
-      assert.equal(response.text, 'Hello Neo!');
+      assert.strictEqual(response.text, 'Hello Neo!');
     });
     
     it('should return 400 when name contains a number', async () => {
@@ -43,13 +43,13 @@ describe('server', () => {
     it('should return greeting', async () => {
       const response = await baseUrl.get(route)
         .expect(200);
-      assert.equal(response.text, 'Howdy World!');
+      assert.strictEqual(response.text, 'Howdy World!');
     });
     
     it('should return greeting with name parameter', async () => {
       const response = await baseUrl.get(`${route}?name=Neo`)
         .expect(200);
-      assert.equal(response.text, 'Howdy Neo!');
+      assert.strictEqual(response.text, 'Howdy Neo!');
     });
 
     it('should return 400 when name contains a number', async () => {
